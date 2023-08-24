@@ -1,6 +1,6 @@
-# `Concurrent Kernels` Sample
+# `OceanFFT` Sample
 
-The `Concurrent Kernels` sample demonstrates the use of SYCL queues for concurrent execution of several kernels on GPU devices. It is implemented using SYCL by migrating Native CUDA source code for offloading computations to a GPU or CPU and further demonstrates how to optimize and improve processing time.
+The `OceanFFT` sample demonstrates the use of SYCL queues for concurrent execution of several kernels on GPU devices. It is implemented using SYCL by migrating Native CUDA source code for offloading computations to a GPU or CPU and further demonstrates how to optimize and improve processing time.
 
 | Area                   | Description
 |:---                    |:---
@@ -8,11 +8,11 @@ The `Concurrent Kernels` sample demonstrates the use of SYCL queues for concurre
 | Time to complete       | 15 minutes
 | Category               | Concepts and Functionality
 
->**Note**: This sample is migrated from NVIDIA CUDA sample. See the [concurrentKernels](https://github.com/NVIDIA/cuda-samples/tree/master/Samples/0_Introduction/concurrentKernels) sample in the NVIDIA/cuda-samples GitHub.
+>**Note**: This sample is migrated from NVIDIA CUDA sample. See the [oceanFFT](https://github.com/NVIDIA/cuda-samples/tree/master/Samples/4_CUDA_Libraries/oceanFFT) sample in the NVIDIA/cuda-samples GitHub.
 
 ## Purpose
 
-The `Concurrent Kernels` sample shows the execution of multiple kernels on the device at the same time.
+The `oceanFFT` sample shows the execution of multiple kernels on the device at the same time.
 
 > **Note**: The sample used the open-source SYCLomatic tool that assists developers in porting CUDA code to SYCL code. To finish the process, you must complete the rest of the coding manually and then tune to the desired level of performance for the target architecture. You can also use the Intel® DPC++ Compatibility Tool available to augment Base Toolkit.
 
@@ -62,7 +62,7 @@ For this sample, the SYCLomatic tool automatically migrates 100% of the CUDA cod
    ```
 2. Change to the concurrentKernels sample directory.
    ```
-   cd cuda-samples/Samples/0_Introduction/concurrentKernels/
+   cd cuda-samples/Samples/4_CUDA_Libraries/oceanFFT/
    ```
 3. Generate a compilation database with intercept-build.
    ```
