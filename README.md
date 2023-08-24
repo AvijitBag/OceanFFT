@@ -1,6 +1,6 @@
 # `OceanFFT` Sample
 
-The `OceanFFT` sample demonstrates the use of SYCL queues for concurrent execution of several kernels on GPU devices. It is implemented using SYCL by migrating Native CUDA source code for offloading computations to a GPU or CPU and further demonstrates how to optimize and improve processing time.
+The `OceanFFT` sample demonstrates the use of SYCL queues for Ocean height field on GPU devices. It is implemented using SYCL by migrating Native CUDA source code for FFT to a GPU or CPU.
 
 | Area                   | Description
 |:---                    |:---
@@ -12,7 +12,7 @@ The `OceanFFT` sample demonstrates the use of SYCL queues for concurrent executi
 
 ## Purpose
 
-The `oceanFFT` sample shows the execution of multiple kernels on the device at the same time.
+The `oceanFFT` sample shows the Ocean height field on the device at the same time.
 
 > **Note**: The sample used the open-source SYCLomatic tool that assists developers in porting CUDA code to SYCL code. To finish the process, you must complete the rest of the coding manually and then tune to the desired level of performance for the target architecture. You can also use the Intel® DPC++ Compatibility Tool available to augment Base Toolkit.
 
