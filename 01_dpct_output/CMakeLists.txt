@@ -1,8 +1,14 @@
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsycl")
+if(PVC)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsycl -fsycl-targets=intel_gpu_pvc -D PVC")
+else()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsycl ")
+endif()
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "-qmkl ${CMAKE_EXE_LINKER_FLAGS}")
 include_directories(${CMAKE_SOURCE_DIR}/01_dpct_output/Common/)
 
-add_executable (01_dpct_output Samples/0_Introduction/concurrentKernels/concurrentKernels.dp.cpp)
+add_executable (01_dpct_output Samples/4_CUDA_Libraries/oceanFFT/oceanFFT_kernel.dp.cpp Samples/4_CUDA_Libraries/oceanFFT/oceanFFT.cpp.dp.cpp)
 target_link_libraries(01_dpct_output sycl)
 
-add_custom_target (run cd ${CMAKE_SOURCE_DIR}/01_dpct_output/ && ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/01_dpct_output)
+
+add_custom_target (run cd ${CMAKE_SOURCE_DIR}/01_dpct_output/ && ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/01_dpct_output qatest)
