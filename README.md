@@ -36,14 +36,7 @@ For information on how to use SYCLomatic, refer to the materials at *[Migrate fr
 
 ## Key Implementation Details
 
-This sample demonstrates the migration of the following prominent CUDA feature:
 
-- Streams and Event Management
-- Reduction
-
-concurrentKernels involves a kernel that does no real work but runs at least for a specified number of iterations.
-
-This code demonstrates the use of CUDA streams for concurrent execution of multiple kernels. It creates multiple streams, each associated with a separate kernel, and uses cudaStreamWaitEvent to introduce dependencies between the streams. The code measures the elapsed time for both serial and concurrent execution of the kernels. The kernel has a loop that iterates for a specific number of times without performing any actual work. Finally, the code verifies if the concurrent execution of kernels was faster than the serial execution based on the measured times.
 
 >**Note**: Refer to [Workflow for a CUDA* to SYCL* Migration](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/cuda-sycl-migration-workflow.html) for general information about the migration workflow.
 
