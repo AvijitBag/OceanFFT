@@ -35,7 +35,26 @@ For information on how to use SYCLomatic, refer to the materials at *[Migrate fr
 
 
 ## Key Implementation Details
+   This sample demonstrates how to use FFT API to synthesize and render an ocean surface in real-time.
 
+1.  Generate wave spectrum in frequency domain.
+   ```
+   git clone https://github.com/NVIDIA/cuda-samples.git
+   ```
+2.  Execute inverse FFT to convert to spatial domain.
+   ```
+   CheckCudaErrors(
+      DPCT_CHECK_ERROR((fftPlan->compute<sycl::float2, sycl::float2>(
+          d_ht, d_ht, dpct::fft::fft_direction::backward))));
+   ```
+3.  Update heightmap values.
+   ```
+   cudaUpdateHeightmapKernel(g_hptr, d_ht, meshSize, meshSize, true);
+   ```
+4.  Calculate slope for shading.
+   ```
+   cudaCalculateSlopeKernel(g_hptr, g_sptr, meshSize, meshSize);
+   ```
 
 
 >**Note**: Refer to [Workflow for a CUDA* to SYCL* Migration](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/cuda-sycl-migration-workflow.html) for general information about the migration workflow.
