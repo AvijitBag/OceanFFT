@@ -1,6 +1,6 @@
 {
   "guid": "020F122F-2E38-4F86-91FE-3400FBD1C483",	
-  "name": "Concurrent Kernels",
+  "name": "OceanFFT",
   "categories": ["Toolkit/oneAPI Direct Programming/C++SYCL"],
   "description": "This sample shows the execution of Multiple Kernels on the device at the same time.",
   "toolchain": [ "dpcpp" ],
