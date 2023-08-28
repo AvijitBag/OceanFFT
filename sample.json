@@ -1,8 +1,8 @@
 {
   "guid": "020F122F-2E38-4F86-91FE-3400FBD1C483",	
   "name": "OceanFFT",
-  "categories": ["Toolkit/oneAPI Direct Programming/C++SYCL"],
-  "description": "This sample shows the execution of Multiple Kernels on the device at the same time.",
+  "categories": ["Toolkit/oneAPI Direct Programming/C++SYCL/SpectralMethods"],
+  "description": "This sample shows the demonstrates the use of SYCL queues for Ocean height field on GPU devices.",
   "toolchain": [ "dpcpp" ],
   "languages": [ { "cpp": {} } ],
   "targetDevice": [ "CPU", "GPU" ],
