@@ -4,7 +4,7 @@ The `OceanFFT` sample demonstrates the use of SYCL queues for Ocean height field
 
 | Area                   | Description
 |:---                    |:---
-| What you will learn    | How to begin migrating CUDA to SYCL
+| What you will learn    | Migrate and Map SYCL oneMKL FFT equivalent of CUFFT API's
 | Time to complete       | 15 minutes
 | Category               | Concepts and Functionality
 
@@ -12,7 +12,9 @@ The `OceanFFT` sample demonstrates the use of SYCL queues for Ocean height field
 
 ## Purpose
 
-The `oceanFFT` sample shows the Ocean height field on the device at the same time.
+OceanFFT is a simulation of ocean waves/height field using FFT. FFT transforms the data from the time/space domain to frequency and vice versa. Ocean is made of many waves all added together. The main principle of Ocean rendering is that it can be modelled as sum of infinite waves at different amplitudes travelling in different directions. 
+
+The cuFFT library allows the floating-point power and parallelism of the GPU without having to develop a custom GPU-based FFT implementation. The equivalent lib on SYCL would be oneAPI Math Kernel Library provides one-dimensional, two-dimensional, and multi-dimensional transforms (of up to seven dimensions). 
 
 > **Note**: The sample used the open-source SYCLomatic tool that assists developers in porting CUDA code to SYCL code. To finish the process, you must complete the rest of the coding manually and then tune to the desired level of performance for the target architecture. You can also use the Intel® DPC++ Compatibility Tool available to augment Base Toolkit.
 
@@ -36,13 +38,23 @@ For information on how to use SYCLomatic, refer to the materials at *[Migrate fr
 
 ## Key Implementation Details
 This sample demonstrates the migration of the following prominent CUDA features:
- - CUDA CUFFT API
+ - CUDA FFT API (CUFFT)
 
-OceanFFT sample demonstrates how to use FFT API to synthesize and render an ocean surface in real-time.
-
+OceanFFT sample demonstrates how to use FFT API to synthesize and render an ocean surface in real-time. SYCL oceanFFT generates wave heightfield at time based on initial heightfield and dispersion relationship. Then FFT API is executed in inverse order to convert to spatial domain. Finally, height map values and slope values are evaluated and compared with reference values to determine it is correct or wrong.
 
 >**Note**: Refer to [Workflow for a CUDA* to SYCL* Migration](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/cuda-sycl-migration-workflow.html) for general information about the migration workflow.
 
+## CUDA source code evaluation
+
+The OceanFFT sample demonstrates the FFT through different process one after the another. 
+
+- Generate wave spectrum in frequency domain.
+- Execute inverse FFT to convert to spatial domain.
+- Update height map values based on output of FFT.
+- Calculate slope by partial differences in spatial domain.
+
+
+> **Note**: For more information on how to use Syclomatic Tool, visit [Migrate from CUDA* to C++ with SYCL*](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/migrate-from-cuda-to-cpp-with-sycl.html#gs.vmhplg).
 
 ## Set Environment Variables
 
@@ -68,23 +80,12 @@ For this sample, the SYCLomatic tool automatically migrates 100% of the CUDA cod
 
 4. Pass the JSON file as input to the Intel® SYCLomatic Compatibility Tool. The result is written to a folder named dpct_output. The --in-root specifies path to the root of the source tree to be migrated.
    ```
-   c2s -p compile_commands.json --in-root ../../.. --use-custom-helper=api
+   c2s -p compile_commands.json --in-root ../../.. --gen-helper-function 
    ```
 ## Manual Workarounds
 The following manual change has been modified in order to complete the migration.
-1. OpenGl feature is not supported in SYCL. Need to comment out the code before migration. 
-      ```
-      //#include <helper_gl.h>
-      //#include <cuda_gl_interop.h>
-      //#include <GLUT/glut.h>
-      //#else
-      //#include <GL/freeglut.h>
-      //#endif
-
-      //#include <rendercheck_gl.h>
-      ```
    
-2. Few CUDA headers are not migrated to SYCL which contain some macros,those are used in code. It has been changed manually.
+1. Few CUDA headers are not migrated to SYCL which contain some macros,those are used in code. It has been changed manually.
       ```
       CUDART_SQRT_HALF_F
       ```
@@ -92,6 +93,7 @@ The following manual change has been modified in order to complete the migration
       ```
       #define SYCLRT_SQRT_HALF_F 0.707106781f
       ```
+> **Note**: OceanFFT CUDA sample includes openGL feature as well, Since SYCL does not support openGL we donot migrate openGL functions.
 
 ## Build and Run the `oceanFFT` Sample
 
@@ -116,10 +118,10 @@ The following manual change has been modified in order to complete the migration
    ```
    $ mkdir build
    $ cd build
-   $ cmake .. or ( cmake -D PVC=1 .. )
+   $ cmake .. or ( cmake -D MAX_GPU=1 .. )
    $ make
    ```
-
+ **Note**: For Intel(R) Data Center GPU Max 1550 or 1100, to get optimized performace enable MAX_GPU flag during build.
    By default, this command sequence will build the  `02_sycl_migrated` version of the program.
 
 3. Run `02_sycl_migrated` on GPU.
