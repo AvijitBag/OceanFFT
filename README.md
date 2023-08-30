@@ -122,6 +122,7 @@ The following manual change has been modified in order to complete the migration
    $ make
    ```
  **Note**: For Intel(R) Data Center GPU Max 1550 or 1100, to get optimized performace enable MAX_GPU flag during build.
+ 
    By default, this command sequence will build the  `02_sycl_migrated` version of the program.
 
 3. Run `02_sycl_migrated` on GPU.
