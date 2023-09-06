@@ -60,6 +60,7 @@ The OceanFFT sample demonstrates the FFT through different process one after the
 
 When working with the command-line interface (CLI), you should configure the oneAPI toolkits using environment variables. Set up your CLI environment by sourcing the `setvars` script every time you open a new terminal window. This practice ensures that your compiler, libraries, and tools are ready for development.
 
+
 ## Migrate the Code Using SYCLomatic
 
 For this sample, the SYCLomatic tool automatically migrates 100% of the CUDA code to SYCL. Follow these steps to generate the SYCL code using the compatibility tool.
@@ -114,7 +115,12 @@ The following manual change has been modified in order to complete the migration
 ### On Linux*
 
 1. Change to the sample directory.
-2. Build the program.
+2. Set the open source oneMKL install path in environment variables before building for Nvidia GPUs only.  
+   ```
+   export ONEMKL_INSTALL_DIR=path_to_opensource_oneMKL_build_dir
+   export LD_LIBRARY_PATH=$ONEMKL_INSTALL_DIR/lib:$LD_LIBRARY_PATH
+   ```
+3. Build the program.
    ```
    $ mkdir build
    $ cd build
@@ -125,15 +131,11 @@ The following manual change has been modified in order to complete the migration
    > - By default, no flag are enabled during build which supports Intel® UHD Graphics, Intel® Gen9, Gen11, Xeon CPU.
    > - Enable **INTEL_MAX_GPU** flag during build which supports Intel® Data Center GPU Max 1550 or 1100 to get optimized performance.
    > - Enable **NVIDIA_GPU** flag during build which supports NVIDIA GPUs.([oneAPI for NVIDIA GPUs](https://developer.codeplay.com/products/oneapi/nvidia/) plugin   from Codeplay is required to build for NVIDIA GPUs )
-   > <br>Set the following environment variables before building for Nvidia GPU:  
-   > ```
-   > export ONEMKL_INSTALL_DIR=path_to_opensource_oneMKL_build_dir
-   > export LD_LIBRARY_PATH=$ONEMKL_INSTALL_DIR/lib:$LD_LIBRARY_PATH
-   > ```
+
  
    By default, this command sequence will build the  `02_sycl_migrated` version of the program.
 
-3. Run `02_sycl_migrated` on GPU.
+4. Run `02_sycl_migrated` on GPU.
    ```
    make run_sm
    ```
