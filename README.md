@@ -30,10 +30,11 @@ This sample contains two versions of the code in the following folders:
 | Optimized for         | Description
 |:---                   |:---
 | OS                    | Ubuntu* 20.04
-| Hardware              | Intel® Gen9 <br> Gen11 <br> Xeon CPU <br> Data Center GPU Max
-| Software              | SYCLomatic (Tag - 20230720) <br> Intel® oneAPI Base Toolkit (Base Kit) version 2023.2.1
+| Hardware              | Intel® Gen9 <br>Intel® Gen11 <br>Intel® Xeon CPU <br>Intel® Data Center GPU Max <br> Nvidia Testa P100 <br> Nvidia A100 <br> Nvidia H100 
+| Software              | SYCLomatic (Tag - 20230720) <br> Intel® oneAPI Base Toolkit (Base Kit) version 2023.2.1 <br> oneAPI for NVIDIA GPU plugin from Codeplay (to run SYCL™ applications on NVIDIA® GPUs)
 
-For information on how to use SYCLomatic, refer to the materials at *[Migrate from CUDA* to C++ with SYCL*](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/migrate-from-cuda-to-cpp-with-sycl.html)*.
+For information on how to use SYCLomatic, refer to the materials at *[Migrate from CUDA* to C++ with SYCL*](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/migrate-from-cuda-to-cpp-with-sycl.html)*.<br> How to run SYCL™ applications on NVIDIA® GPUs, refer to 
+[oneAPI for NVIDIA GPUs](https://developer.codeplay.com/products/oneapi/nvidia/) plugin from Codeplay.
 
 
 ## Key Implementation Details
@@ -43,7 +44,6 @@ This sample demonstrates the migration of the following prominent CUDA features:
 OceanFFT sample demonstrates how to use FFT API to synthesize and render an ocean surface in real-time. SYCL oceanFFT generates wave heightfield at time based on initial heightfield and dispersion relationship. Then FFT API is executed in inverse order to convert to spatial domain. Finally, height map values and slope values are evaluated and compared with reference values to determine it is correct or wrong.
 
 >**Note**: Refer to [Workflow for a CUDA* to SYCL* Migration](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/cuda-sycl-migration-workflow.html) for general information about the migration workflow.
-
 ## CUDA source code evaluation
 
 The OceanFFT sample demonstrates the FFT through different process one after the another. 
@@ -118,10 +118,15 @@ The following manual change has been modified in order to complete the migration
    ```
    $ mkdir build
    $ cd build
-   $ cmake .. or ( cmake -D MAX_GPU=1 .. )
+   $ cmake .. or ( cmake -D INTEL_MAX_GPU=1 .. ) or ( cmake -D NVIDIA_GPU=1 .. )
    $ make
    ```
- **Note**: For Intel(R) Data Center GPU Max 1550 or 1100, to get optimized performace enable MAX_GPU flag during build.
+   > **Note**:
+   > - By default, no flag are enabled during build which supports Intel® UHD Graphics, Intel® Gen9, Gen11, Xeon CPU.
+   > - Enable **INTEL_MAX_GPU** flag during build which supports Intel® Data Center GPU Max 1550 or 1100 to get optimized performance.
+   > - Enable **NVIDIA_GPU** flag during build which supports NVIDIA GPUs.([oneAPI for NVIDIA GPUs](https://developer.codeplay.com/products/oneapi/nvidia/) plugin   from Codeplay is required to build for NVIDIA GPUs )
+   >   
+   >
  
    By default, this command sequence will build the  `02_sycl_migrated` version of the program.
 
