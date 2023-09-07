@@ -115,7 +115,7 @@ The following manual change has been modified in order to complete the migration
 ### On Linux*
 
 1. Change to the sample directory.
-2. Set the open source oneMKL install path in environment variables before building for Nvidia GPUs only.  
+2. For Nvidia GPUs, install the opensource oneMKL lib and set the environment variables before build.  
    ```
    export ONEMKL_INSTALL_DIR=path_to_opensource_oneMKL_build_dir
    export LD_LIBRARY_PATH=$ONEMKL_INSTALL_DIR/lib:$LD_LIBRARY_PATH
