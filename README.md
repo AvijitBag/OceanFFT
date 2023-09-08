@@ -1,10 +1,10 @@
 # `OceanFFT` Sample
 
-The `OceanFFT` sample demonstrates the use of SYCL queues for Ocean height field on GPU devices. It is implemented using SYCL by migrating code from original CUDA source code and offloading computations to a GPU or CPU.
+The `OceanFFT` sample simulates an Ocean height field using oneMKL FFT funtionality. It is implemented using SYCL by migrating code from original CUDA source code and offloading computations to a GPU or CPU.
 
 | Area                   | Description
 |:---                    |:---
-| What you will learn    | Migrate and Map SYCL oneMKL FFT equivalent of CUFFT API's
+| What you will learn    | How to migrate and map SYCL oneMKL FFT equivalent of CUFFT API's
 | Time to complete       | 15 minutes
 | Category               | Concepts and Functionality
 
@@ -14,15 +14,15 @@ The `OceanFFT` sample demonstrates the use of SYCL queues for Ocean height field
 
 OceanFFT is a simulation of ocean waves/height field using FFT. FFT transforms the data from the time/space domain to frequency and vice versa. Ocean is made of many waves all added together. The main principle of Ocean rendering is that it can be modelled as sum of infinite waves at different amplitudes travelling in different directions. 
 
-The cuFFT library allows the floating-point power and parallelism of the GPU without having to develop a custom GPU-based FFT implementation. The equivalent lib on SYCL would be oneAPI Math Kernel Library provides one-dimensional, two-dimensional, and multi-dimensional transforms (of up to seven dimensions). 
+The cuFFT library allows the floating-point power and parallelism of the GPU without having to develop a custom GPU-based FFT implementation. The equivalent lib on SYCL would be oneAPI Math Kernel Library where FFT function supports one, two, or three dimensions with mixed radices. The supported functions include complex-to-complex and real-to-complex transforms of arbitrary length in single-precision and double-precision. 
 
-> **Note**: The sample used the open-source SYCLomatic tool that assists developers in porting CUDA code to SYCL code. To finish the process, you must complete the rest of the coding manually and then tune to the desired level of performance for the target architecture. You can also use the Intel® DPC++ Compatibility Tool available to augment Base Toolkit.
+> **Note**: The sample used the open-source [SYCLomatic](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/migrate-from-cuda-to-cpp-with-sycl.html) tool that assists developers in porting CUDA code to SYCL code. To finish the process, you must complete the rest of the coding manually and then tune to the desired level of performance for the target architecture. You can also use the Intel® DPC++ Compatibility Tool available to augment Base Toolkit.
 
 This sample contains two versions of the code in the following folders:
 
 | Folder Name          | Description
 |:---                  |:---
-|`01_dpct_output`      | Contains output of SYCLomatic Tool used to migrate SYCL-compliant code from CUDA code. This SYCL code has some unmigrated code that has to be manually fixed to get full functionality. (The code does not functionally work as supplied.)
+|`01_dpct_output`      | Contains output of SYCLomatic Tool used to migrate SYCL-compliant code from CUDA code. This SYCL code has some unmigrated code that must be manually fixed to get full functionality. (The code does not functionally work as supplied.)
 |`02_sycl_migrated`    | Contains manually migrated SYCL code from CUDA code.
 
 ## Prerequisites
@@ -38,10 +38,10 @@ For information on how to use SYCLomatic, refer to the materials at *[Migrate fr
 
 
 ## Key Implementation Details
-This sample demonstrates the migration of the following prominent CUDA features:
+This sample demonstrates the migration of the following prominent CUDA feature:
  - CUDA FFT API (CUFFT)
 
-OceanFFT sample demonstrates how to use FFT API to synthesize and render an ocean surface in real-time. SYCL oceanFFT generates wave heightfield at time based on initial heightfield and dispersion relationship. Then FFT API is executed in inverse order to convert to spatial domain. Finally, height map values and slope values are evaluated and compared with reference values to determine it is correct or wrong.
+OceanFFT sample demonstrates how to use FFT API to synthesize and render an ocean surface in real-time. SYCL oceanFFT generates wave heightfield at time based on initial heightfield and dispersion relationship. Then FFT API is executed in inverse order to convert to spatial domain. Finally, height map values and slope values are evaluated and compared with reference values to determine whether it is correct or wrong.
 
 >**Note**: Refer to [Workflow for a CUDA* to SYCL* Migration](https://www.intel.com/content/www/us/en/developer/tools/oneapi/training/cuda-sycl-migration-workflow.html) for general information about the migration workflow.
 ## CUDA source code evaluation
